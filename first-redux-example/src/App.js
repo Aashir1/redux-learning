@@ -2,40 +2,51 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {connect} from 'react-redux';
+import {AppAction} from './store/action/action'
 
 
-function mapStateToProps(state){
-  console.log(state);
+function mapStateToProps(state){  
   return{
-    developerData: state
+    counterValue: state
   }
 }
 
 let mapDispatchWithProps = (dispatch) =>{
   return{
-    aashirInfo: ()=> dispatch({type: 'aashir'}),
-    zuhaibInfo: ()=> dispatch({type: 'zuhaib'}),
-    faizInfo: ()=> dispatch({type: 'faiz'}),
-    shoaibInfo: ()=> dispatch({type: 'shoaib'}) 
+    aashirInfo: ()=> dispatch(AppAction.increment_by_3(3)),
+    zuhaibInfo: ()=> dispatch(AppAction.increment()),
+    faizInfo: ()=> dispatch(AppAction.decrement()),
+    addDesireValue: (value)=>dispatch({type: 'add_desire_value', val: value})
   }
 }
 
+
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      userInput: 0
+    }
+  }
+  valueChange(event){
+    this.setState({userInput: parseInt(event.target.value)});
+  }
+  addValue(){
+    this.props.addDesireValue(this.state.userInput);
+    // this.setState({userInput: ''})
+  }
   render() {
     return (
       <div>
         <h1>
-          {this.props.developerData.name}
-          <br />
-          {this.props.developerData.salary}
-          <br />
-          {this.props.developerData.occupation}
-          <br />
+          {this.props.counterValue}
+          
         </h1>
-            <button onClick={this.props.aashirInfo}>Aashir Data</button>
-            <button onClick={this.props.zuhaibInfo}>zuhaib Data</button>
-            <button onClick={this.props.faizInfo}>faiz Data</button>
-            <button onClick={this.props.shoaibInfo}>shoaib Data</button>   
+            <input type="text" onChange={this.valueChange.bind(this)} />
+            <button onClick={this.addValue.bind(this)}>increment_desired_value</button>            
+            <button onClick={this.props.aashirInfo}>increment_by_3</button>
+            <button onClick={this.props.zuhaibInfo}>increment</button>
+            <button onClick={this.props.faizInfo}>decrement</button>
       </div>
     );
   }

@@ -1,29 +1,22 @@
-let state={
-    name: 'name of developer',
-    salary: 'salary of developer',
-    occupation: 'occupation of developer'
-}
+import {AppAction} from '../action/action';
 
 function storeReducers(state = 0, action){
     switch(action.type){
-        case 'aashir':
-        return{ name: 'aashir', occupation: 'full stack developer', salary: '200000'}
+        case AppAction.INCREMENT_BY_3:
+        return state + action.val
         break;
-        case 'shoaib':
-        return{ name: 'shobib', occupation: 'full stack developer', salary: '200000'}
+        case AppAction.INCREMENT:
+        return state + 1
         break;
-        case 'zuhaib':
-        return{ name: 'zuhaib', occupation: 'full stack developer', salary: '200000'}
+        case AppAction.DECREMENT:
+        return state - 1
         break;
-        case 'faiz':
-        return{ name: 'faiz', occupation: 'full stack developer', salary: '200000'}
+        case 'add_desire_value':
+        return state + action.val
         break;
         default:
-        return{
-            name: 'name of developer',
-            salary: 'salary of developer',
-            occupation: 'occupation of developer'
-        } 
+        return state 
+        
     }
 }
 

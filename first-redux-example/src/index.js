@@ -13,10 +13,7 @@ ReactDOM.render(
         <App/>
         From index.js
         <br/>
-            <button onClick={()=>{store.dispatch({type:'aashir'})}}>Aashir Data</button>
-            <button onClick={()=>{store.dispatch({type:'zuhaib'})}}>zuhaib Data</button>
-            <button onClick={()=>{store.dispatch({type:'faiz'})}}>faiz Data</button>
-            <button onClick={()=>{store.dispatch({type:'shoaib'})}}>shoaib Data</button>   
+              
     </div>
     </Provider>
     , document.getElementById('root'));
