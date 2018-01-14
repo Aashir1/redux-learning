@@ -1,8 +1,14 @@
-import React from 'react';
-import {createStore} from 'redux';
-import storeReducer from './reducer/reducer';
+import {createStore, combineReducers } from 'redux';
+import incrementReducer from './reducer/incrementReducer';
+import decrementReducer from './reducer/decrementReducer';
+import addTodo from './reducer/todoList';
 
-let store = createStore(storeReducer);
+let reducers = combineReducers({
+    incrementReducer,
+    decrementReducer,
+    addTodo
+});
 
+let store = createStore(reducers);
 
 export default store;

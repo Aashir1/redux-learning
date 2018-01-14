@@ -1,27 +1,41 @@
-import React, { Component } from 'react';
 
 
-export class AppAction{
+class Action {
     static INCREMENT= 'INCREMENT';
     static DECREMENT = 'DECREMENT';
-    static INCREMENT_BY_3 = 'INCREMENT_BY_3'; 
-    static increment_by_3(value) {
-        return { 
-            type: AppAction.INCREMENT_BY_3 ,
-            val: value 
+    static DESIRE_INCREMENT = 'DESIRE_INCREMENT';
+    static ADDTODO = 'ADDTODO';
+    static DELETETODO = 'DELETETODO';
+
+    static increment(){
+        return{
+            type : Action.INCREMENT
         }
     }
-    static decrement() {
-        return { 
-            type: AppAction.DECREMENT
+    static decrement(){
+        return{
+            type: Action.DECREMENT
         }
     }
-    static increment() {
-        return { 
-            type: AppAction.INCREMENT
+    static desireIncrement(value){
+        return{
+            type: Action.DESIRE_INCREMENT,
+            value
         }
     }
+    static addTodo(value){
+        return{
+            type: Action.ADDTODO,
+            value
+        }
+    }
+    static deleteTodo(indx){
+        return{
+            type: Action.DELETETODO,
+            indx
+        }
+    }
+
 }
 
-
-// export default AppAction;
+export default Action;
