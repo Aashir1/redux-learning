@@ -18,7 +18,8 @@ function mapDispatchWithProps(dispatch){
     decrement: ()=> dispatch(Action.decrement()),
     desireIncrement: (value) => dispatch(Action.desireIncrement(value)),
     addTodo: (value) => dispatch(Action.addTodo(value)),
-    deleteTodo: (index) => dispatch(Action.deleteTodo(index))
+    deleteTodo: (index) => dispatch(Action.deleteTodo(index)),
+    updateTodo: (data, i) => dispatch(Action.updateTodo(data, i))
   }
 }
 
@@ -27,8 +28,14 @@ class CounterApp extends React.Component{
     super(props);
     this.state = {
       userInput : 0,
-      todoData: ''
+      todoData: '',
+      buttonValue: 'Add Todo',
+      tempIndex: 0
     }
+  }
+  componentDidMount(){
+    this.props.deleteTodo('i');
+    this.props.updateTodo(null,null)  
   }
   updateState = (type,event)=>{
     let obj ={};
@@ -46,12 +53,26 @@ class CounterApp extends React.Component{
   }
   addItem = () =>{
     console.log('addlist')
-    this.props.addTodo(this.state.todoData);
-    this.setState({todoData:''});
+    if(this.state.buttonValue === 'Add Todo'){
+      this.props.addTodo(this.state.todoData);
+      this.setState({todoData:''});
+    }else{
+      this.props.updateTodo(this.state.todoData, this.state.tempIndex);
+      this.setState({todoData: '', buttonValue: 'Add Todo'});
+    }
   }
   delete = (i,ev)=>{
-    console.log('delete trigger index is: ' + i)
+    // console.log('delete trigger index is: ' + i)
     this.props.deleteTodo(i);
+  }
+  edit = (data, i) =>{
+    console.log(data);
+    this.setState({
+      todoData: data,
+      tempIndex: i,
+      buttonValue: 'Update'
+    })
+    console.log(this.state.todoData);    
   }
   render(){
   console.log('store state: ', this.props.todoList);
@@ -68,15 +89,17 @@ class CounterApp extends React.Component{
         <div>
           <h1>Todo list</h1>
           <input type='text' value ={this.state.todoData} onChange={(event)=>{this.updateState('todoData',event)}}/>
-          <button onClick={this.addItem}>Add todo</button> 
+          <button onClick={this.addItem}>{this.state.buttonValue}</button> 
           {
             this.props.todoList.map((data, i)=>{
               return(
                 <div>
                   <ul>
-                    <li key ={i}>
-                      {data}
-                      <button onClick={(ev) =>{this.delete(i,ev)}}>Delete</button>
+                    <li key ={data.key}>
+                      {data.value}
+                      <button onClick={(ev) =>{this.delete(data.key,ev)}}>Delete</button>
+                      <button onClick={(ev) =>{this.edit(data.value, data.key)}}>Edit</button>
+                      
                     </li>
                   </ul>
                 </div>

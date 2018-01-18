@@ -1,29 +1,53 @@
 import Action from '../action/action';
 import index from '../index';
-let defaultState ={
+let defaultState = {
     todo: []
 }
-function addTodo(state = defaultState, action){
-    console.log('yes i am called');
-    switch(action.type){
+let i = 0;
+function addTodo(state = defaultState, action) {
+    switch (action.type) {
         case Action.ADDTODO:
-        return Object.assign({}, state, {todo: [...state.todo, action.value]})
-        break;
+            return Object.assign({}, state, { todo: [...state.todo, { value: action.value.values, key: action.key }] })
+            break;
+        case Action.CLEARTODO:
+            return Object.assign({}, state, { todo: [] });
+            break;
         case Action.DELETETODO:
-        console.log('yes its run');
-        return Object.assign({},
+            console.log('yes its run');
+            return Object.assign({},
                 state,
-                {todo: 
-                    state.todo.filter(data=>{console.log(action);return data !== state.todo[action.indx]})
+                {
+                    todo:
+                        state.todo.filter(data => {
+                            return data.key !== action.indx
+                        })
                     // function(){
                     //     console.log(action.indx);
                     //     state.todo.splice(action.indx,1)
                     //     return state.todo;
                     //     }()
+                }
+            )
+        case Action.UPDATETODO:
+            console.log('update action is dispatch');
+            return Object.assign({}, state, {
+                todo: state.todo.map((data, index) => {                    
+                    if (data.key === action.indx) {
+                        return {
+                            updated:'updated',
+                            value: action.data.values,
+                            key: data.key
+                        }
                     }
-                )
+                    return {
+                        value: data.value,
+                        key: data.key
+                    };
+                })
+            })
+            break;
         default:
-        return state;
+            return state;
     }
 }
 export default addTodo;

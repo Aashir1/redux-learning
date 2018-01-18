@@ -5,6 +5,7 @@ let defaultState = {
 }
 
 function incrementReducer(state = defaultState, action){
+    // console.log('increment state: ', state);
     switch(action.type){
         case Action.INCREMENT_BY_3:
         return Object.assign({}, state,{increment: state.increment + 3});

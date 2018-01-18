@@ -4,7 +4,7 @@ let defaultState = {
 }
 
 function decrementReducer(state = defaultState, action){
-    console.log('decrement state: ', state);
+    // console.log('decrement state: ', state);
     switch(action.type){
         case Action.DECREMENT:
         return Object.assign({}, state, {decrement : state.decrement - 1});
